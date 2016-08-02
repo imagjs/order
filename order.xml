@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<imag>
+    <script>
+        <![CDATA[
+            var storage = $phone.localStorage();//定义storage为手机本地存储
+            var num = storage.getItem('num');
+            /*
+            $page.onload = function() {
+                if (num==null||num==""){
+                    num = 1;
+                }
+            	num= parseInt(num);
+            	$('count').text = num+'';
+            }
+            */
+            //车位需求选择
+            function openParkingList(){
+                var levelList = 
+                        $C('<actionmenu id="levelist" title="您是否开车过来">'+
+                            '<item label="是" onclick="changelevelId(\'label5_parking\',\'是\')"/>'+
+                            '<item label="否" onclick="changelevelId(\'label5_parking\',\'否\')"/>'+
+                        '</actionmenu>');
+                levelList.open();
+            }
+            
+            //改变事件状态
+            function changelevelId(labelId,value){
+                $(labelId).text=value;
+            }
+            function order(){
+            	var time = $('time').value;
+            	var number = $('number').value;
+            	var tel = $('tel').value;
+                if(time!=""&&number!=""&&tel!=""){
+                    $page.close(0);
+                    hint('预约成功');
+            		num++;
+            		$('count').text = num+'';
+            		storage.setItem('num',num);
+                }else{
+                    hint('请填写完整信息！')
+                }
+            }
+        ]]>
+    </script>
+    <page screen="full">
+        <content style="background:white">
+            <button style="margin:20 10;color:#FFFFFF;background:title_back.png" position="topleft" relative="icon" onclick="$page.close(0)"></button>
+            <list id="icon" type="transparent">
+                <item style="padding:0"><col>
+                    <icon src="order.jpg" style="width:100%"/>
+                </col></item>
+            </list>
+            <list type="transparent">
+                <item style="padding:0;margin:18 0 21"><col>
+                    <row><label style="color:#434343;font-size:14;align:center;font-weight:bold">在您未准时到达的情况下餐厅将为您保留15分钟</label></row>
+                    <row style="margin-top:5"><label style="color:#434343;font-size:14;align:center;font-weight:bold">若遇到特殊情况请致电餐厅</label></row>
+                    </col></item>
+            </list>
+            <list type="transparent">
+                <item style="margin:0 21 11;padding:0" selectable="false">
+                    <col><row style="padding:0 20;height:40;border:1 #d9effa">
+                        <label style="color:#1d95b3;font-size:12;font-weight:bold">就餐时间 ：</label>
+                        <label style="color:#9a9a9a;font-size:12" id="label1_time">2016.06.20  16:30</label>
+                        </row></col>
+                </item>
+                <item style="margin:0 21 11;padding:0" selectable="false">
+                    <col><row style="padding:0 20;height:40;border:1 #d9effa">
+                        <label style="color:#1d95b3;font-size:12;font-weight:bold">就餐人数 ：</label>
+                        <label style="color:#9a9a9a;font-size:12" id="label2_number">4</label>
+                        </row></col>
+                </item>
+                <item style="margin:0 21 11;padding:0" selectable="false">
+                    <col><row style="padding:0 20;height:40;border:1 #d9effa">
+                        <label style="color:#1d95b3;font-size:12;font-weight:bold">联系方式 ：</label>
+                        <label style="color:#9a9a9a;font-size:12" id="label3_tel">14587764589</label>
+                        </row></col>
+                </item>
+                <item style="margin:0 21 11;padding:0" selectable="false">
+                    <col><row style="padding:0 20;height:40;border:1 #d9effa">
+                        <label style="color:#1d95b3;font-size:12;font-weight:bold">是否吸烟 ：</label>
+                        <label style="color:#9a9a9a;font-size:12" id="label4_smoke">否</label>
+                        </row></col>
+                </item>
+                <item style="margin:0 21 11;padding:0" selectable="false">
+                    <col><row style="padding:0 20;height:40;border:1 #d9effa">
+                        <label style="color:#1d95b3;font-size:12;font-weight:bold">车位需求 ：</label>
+                        <label style="color:#9a9a9a;font-size:12" id="label5_parking" onclick="openParkingList()">否</label>
+                        </row></col>
+                </item>
+                <item style="margin:0 21 11;padding:0" selectable="false">
+                    <col><row style="padding:0 20;height:40;border:1 #d9effa">
+                        <label style="color:#1d95b3;font-size:12;font-weight:bold">其他需求 ：</label>
+                        <label style="color:#9a9a9a;font-size:12" id="label6_others">餐厅将在可执行的情况下提供满足</label>
+                        </row></col>
+                </item>
+            </list>
+        </content>
+        <footer style="background:white">
+            <list>
+                <item style="margin:0 21 11;padding:0" selectable="false" onclick="order()">
+                    <col><row style="padding:0 20;height:40;background:#239cd6">
+                        <label style="color:#ffffff;font-size:12;align:center;font-weight:bold">立即预约</label>
+                        </row></col>
+                </item>
+            </list>
+        </footer>
+    </page>
+</imag>
