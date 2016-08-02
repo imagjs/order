@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<imag>
+    <page screen="full" style="background:#232323">
+        <content>
+            <button style="margin:20 10;color:#FFFFFF;background:title_back.png" position="topleft" relative="icon" onclick="$page.close(0)"></button>
+            <label style="color:#ffffff;font-size:18;margin-bottom:36;margin-left:15" position="bottomleft" relative="icon">享受这个冬天温暖的幸福吧！</label>
+            <label style="color:#ffffff;font-size:13;margin-bottom:16;margin-left:15" position="bottomleft" relative="icon">吃海底捞火锅上Queue，海底捞火锅+Queue套餐</label>
+            <list id="icon" type="transparent">
+                <item style="padding:0"><col>
+                    <icon src="eat_header.jpg" style="width:100%"/>
+                </col></item>
+            </list>
+            <list type="transparent" style="margin-top:5">
+                <item style="margin:5 11;padding:0;col-width:160,*;background:#2b2c2c;col-valign:top,top" onclick="$page.open('eat_1.xml')">
+                    <col><row><icon src="eat_1.jpg" style="height:122;width:160"/></row></col>
+                    <col style="padding:8 11">
+                        <row><label style="color:#ffffff;font-size:18">重庆小面</label></row>
+                        <row style="height:66;padding:0">
+                            <label style="color:#767777;font-size:15;height:60">面条劲道 味道地道</label></row>
+                        <row><label style="color:#137183;font-size:11">200m</label></row>
+                    </col>
+                </item>
+                <item style="margin:5 11;padding:0;col-width:160,*;background:#2b2c2c;col-valign:top,top" onclick="$page.open('eat_1.xml')">
+                    <col><row><icon src="eat_2.jpg" style="height:122;width:160"/></row></col>
+                    <col style="padding:8 11">
+                        <row><label style="color:#ffffff;font-size:18">鑫海汇</label></row>
+                        <row style="height:66;padding:0">
+                            <label style="color:#767777;font-size:15;height:60">高级海鲜自助，限时优惠价388/人</label></row>
+                        <row><label style="color:#137183;font-size:11">200m</label></row>
+                    </col>
+                </item>
+                <item style="margin:5 11;padding:0;col-width:160,*;background:#2b2c2c;col-valign:top,top" onclick="$page.open('eat_1.xml')">
+                    <col><row><icon src="eat_3.jpg" style="height:122;width:160"/></row></col>
+                    <col style="padding:8 11">
+                        <row><label style="color:#ffffff;font-size:18">海底捞</label></row>
+                        <row style="height:66;padding:0">
+                            <label style="color:#767777;font-size:15;height:60">吃火锅，享受这个冬天温暖的幸福吧！</label></row>
+                        <row><label style="color:#137183;font-size:11">200m</label></row>
+                    </col>
+                </item>
+            </list>
+        </content>
+    </page>
+</imag>
