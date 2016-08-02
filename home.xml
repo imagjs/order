@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<imag>
+    <script>
+        <![CDATA[
+            /*
+            var uid = 'admin';
+            var key = '6666';
+            */
+            var remember = 0;
+            function login(){
+                hint('登陆成功');
+                $page.open('home.xml');
+                /*
+            	var username = $('username').value;
+            	var password = $('password').value;
+                if (username==uid&&password==key){
+                    hint('登陆成功');
+                    $page.open('home.xml');
+                }else{
+                    hint('用户名/密码 错误！请重新输入');
+                }
+                */
+            }
+            function remember_psw(){
+                if(remember == 0){
+                    $('check').src = 'checked.png';
+                    remember = 1;
+                }else {
+                    $('check').src = 'check.png';
+                    remember = 0;
+                }
+            }
+        ]]>
+    </script>
+    <page screen="full" style="background:index.jpg">
+        <content>
+        </content>
+		<footer>
+            <list type="transparent">
+                <item style="padding:0"><col>
+                    <row><label style="font-style:italic;font-size:35;color:white;align:center">Queue</label></row>
+                    <row style="background:white;height:4;width:50;align:center;margin-top:10"></row>
+                    </col></item>
+                <item style="padding:0;margin:84 40 0;"><col>
+                    <row><input type="text" id="username" placeholder="Username" style="color:#707070;height:48;background:white"/></row>
+                    <row style="background:#eff0f0;height:1"></row>
+                    <row><input type="password" id="password" placeholder="Password" style="color:#707070;height:48;background:white"/></row>
+                    </col></item>
+                <item style="border:1 white;margin:18 40 0;padding:0" onclick="login()">
+                    <col><row style="height:42"><label style="align:center;font-size:17;color:white;">Sign In</label></row></col>
+                </item>
+                <item style="padding:0;margin:22 40 46">
+                    <row>
+                        <icon id="check" src="check.png" onclick="remember_psw()"/>
+                        <label style="font-size:14;color:#ffffff;margin-left:10" onclick="remember_psw()">Remember password</label>
+                        <label style="font-size:14;color:#ffffff;align:right;text-decoration:underline">register→</label>
+                    </row>
+                </item>
+            </list>
+		</footer>
+    </page>
+</imag>
