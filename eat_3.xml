@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<imag>
+    <page screen="full" style="background:#ffffff">
+        <content>
+            <button style="margin:20 10;color:#FFFFFF;background:title_back.png" position="topleft" relative="icon" onclick="$page.close(0)"></button>
+            <list id="icon" type="transparent">
+                <item style="padding:0"><col>
+                    <icon src="eat_2.jpg" style="width:100%"/>
+                </col></item>
+            </list>
+            <list type="transparent" style="margin-top:31">
+                <item style="padding:0"><col>
+                    <row><label style="font-size:19;color:#343434;align:center;font-weight:bold">吃火锅，享受这个冬天温暖的幸福吧！</label></row>
+                    <row><label style="font-size:15;color:#343434;align:center;font-style:italic;margin:14 0 10">2016.4.12</label></row>
+                    <row style="background:#0caadc;width:80;height:2;align:center"></row>
+                    </col></item>
+                <item style="padding:40"><col><row>
+                    <label style="color#878787;font-size:16"><![CDATA[【吃海底捞火锅上Queue，海底捞火锅套餐&Queue首发合作】 海底捞火锅与Queue首发合作！12月12日—19日，上Queue点海底捞火锅家用套餐，上海地区全店满减，健康快捷更快更省！五款火锅套餐任您选，总有一款适合您！在家预约吃海底捞，享受这个冬天温暖的幸福吧！]]></label>
+                    </row></col></item>
+            </list>
+        </content>
+        <footer>
+            <list><item style="margin:30 39;background:#00a9de" onclick="$page.open('order.xml')"><col><row>
+                <label style="font-size:16;color:#ffffff;align:center">预约</label>
+                </row></col></item></list>
+        </footer>
+    </page>
+</imag>
