@@ -2,360 +2,61 @@
 <imag>
     <script>
         <![CDATA[
-            Date.prototype.format = function(fmt) { //author: meizz 
-                var o = { 
-                    "M+" : this.getMonth()+1,                 //月份 
-                    "d+" : this.getDate(),                    //日 
-                    "h+" : this.getHours(),                   //小时 
-                    "m+" : this.getMinutes(),                 //分 
-                    "s+" : this.getSeconds(),                 //秒 
-                    "q+" : Math.floor((this.getMonth()+3)/3), //季度 
-                    "S"  : this.getMilliseconds()             //毫秒 
-                    }; 
-                if(/(y+)/.test(fmt)) 
-                fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length)); 
-                for(var k in o) 
-                if(new RegExp("("+ k +")").test(fmt)) 
-                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length))); 
-                return fmt; 
+            /*
+            var uid = 'admin';
+            var key = '6666';
+            */
+            var remember = 0;
+            function login(){
+                hint('登陆成功');
+                $page.open('home.xml');
+                /*
+            	var username = $('username').value;
+            	var password = $('password').value;
+                if (username==uid&&password==key){
+                    hint('登陆成功');
+                    $page.open('home.xml');
+                }else{
+                    hint('用户名/密码 错误！请重新输入');
+                }
+                */
             }
-            
-            function dateTotime(date_time) { 
-                var date = new Date(parseInt(date_time) * 1000);
-                return date.format("MM-dd hh:mm"); 	
-            }
-        
-            function qqLogin() {
-                $phone.thirdPartyLogin({
-                    platform:'qq',
-                    success:function(userid) {
-                        hint(userid)
-                    },
-                    error:function() {
-                    }
-                });
-            }
-            
-            function sinaLogin() {
-                $phone.thirdPartyLogin({
-                    platform:'sinaweibo',
-                    success:function(userid) {
-                        hint(userid)
-                    },
-                    error:function() {
-                    }
-                });
-            }
-            
-            function toSearch() {
-                $('slidingmenu').close();
-                $page.open('search.xml');
-            }
-            
-            function toFavorite() {
-                $('slidingmenu').close();
-                $page.open('favorite.xml');
-            }
-           
-            function toMessage() {
-                $('slidingmenu').close();
-                $page.open('login.xml');
-            }
-        
-            function toOffline() {
-                $('slidingmenu').close();
-                $page.open('offline.xml');
-            }
-        
-            function toActivity() {
-                $('slidingmenu').close();
-                $page.open('activity.xml');
-            }
-        
-            function toSetting() {
-                $('slidingmenu').close();
-                $page.open('setting.xml');
-            }
-        
-            function toFeedback() {
-                $('slidingmenu').close();
-                $page.open('feedback.xml');
-            }
-        
-            function openActionMenu() {
-                var menu = $C('<actionmenu title="操作">' +
-                         '<item label="读文章" onclick="hint(\'读文章\')"/>' +
-                         '<item label="收藏" onclick="hint(\'收藏\')"/>' +
-                         '<item label="不感兴趣" onclick="hint(\'不感兴趣\')"/>' +
-                    '</actionmenu>');
-                menu.open();
-            }
-            
-            var currCategory = 'news_default';
-
-            function titlebarRefresh() {
-                $('titlebar_refresh').css('display', 'none');
-                $('titlebar_progress').css('display', '');
-                loadNewsList(currCategory, true);
-            }
-        
-        	function getContentXml(category) {
-                var contentXml = '<content id="' + category + '_content" style="background:#F0F0F0;" ondragdown="loadNewsList(\'' + category + '\', true);" ondragup="loadNewsList(\'' + category + '\', false);">' +
-                    '<list id="' + category + '_list" reuse="true" onscrollbottom="alert(111)">' +
-                        '<item style="background:#F3F3F3,#F0EDF0;">' +
-                            '<row style="padding:0 5"><label style="color:#4A4A4A;font-size:18" reusekey="title"></label></row>' +
-                            '<row style="margin-top:5;padding:0 5">' +
-                                '<label style="color:#9D9D9D;font-size:12;align:left" reusekey="source"></label>' +
-                                '<label style="color:#999999;font-size:12;align:right" reusekey="comment_count"></label>' +
-                                '<label style="color:#999999;font-size:12;align:right;margin-left:10" reusekey="publish_time"></label>' +
-                                '<button type="icon" icon="popicon_listpage_normal.png,popicon_listpage_pressed.png" style="background:null,null;align:right;margin-left:10;width:40;height:20" onclick="openActionMenu();"></button>' +
-                            '</row>' +
-                        '</item>' +
-						'<item style="background:#F3F3F3,#F0EDF0;">' +
-                            '<row style="padding:0 5;">' +
-                                '<label style="color:#4A4A4A;font-size:18;margin-right:10;width:65%;" reusekey="title"></label>' +
-                                '<img reusekey="middle_image" default="default_image.png" style="width:120;height:70;"/>' +
-                            '</row>' +
-                            '<row style="margin-top:5;padding:0 5">' +
-                                '<label style="color:#9D9D9D;font-size:12" reusekey="source"></label>' +
-                                '<label style="color:#999999;font-size:12;align:right" reusekey="comment_count"></label>' +
-                                '<label style="color:#999999;font-size:12;align:right;margin-left:10" reusekey="publish_time"></label>' +
-                                '<button type="icon" icon="popicon_listpage_normal.png,popicon_listpage_pressed.png" style="background:null,null;align:right;margin-left:10;width:40;height:20" onclick="openActionMenu();"></button>' +
-                            '</row>' +
-                        '</item>' +
-                        '<item style="background:#F3F3F3,#F0EDF0;">' +
-                            '<row style="padding:0 5"><label style="color:#4A4A4A;font-size:18" reusekey="title"></label></row>' +
-                            '<row style="margin-top:5;padding:0 5">' +
-                                '<label style="color:#9D9D9D;font-size:12" reusekey="comment_count"></label>' +
-                                '<label style="color:#999999;font-size:12;align:right" reusekey="comment_count"></label>' +
-                                '<label style="color:#999999;font-size:12;align:right;margin-left:10" reusekey="publish_time"></label>' +
-                                '<button type="icon" icon="popicon_listpage_normal.png,popicon_listpage_pressed.png" style="background:null,null;align:right;margin-left:10;width:40;height:20" onclick="openActionMenu();"></button>' +
-                            '</row>' +
-                            '<row>' +
-                                '<img reusekey="image1" default="default_image.png" style="align:left;width:110;height:70"/>' +
-                                '<img reusekey="image2" default="default_image.png" style="align:center;width:110;height:70"/>' +
-                                '<img reusekey="image3" default="default_image.png" style="align:right;width:110;height:70"/>' +
-                            '</row>' +
-                        '</item>' +
-                    '</list>' +
-                    '<bottom style="display:none">' +
-                        '<row style="padding:10" onclick="loadNewsList(\'' + category + '\', false);"><progress id="' + category + '_progress" style="align:center;display:none"/><label style="align:center;margin-left:5" id="' + category + '_more_label">更多推荐..</label></row>' +
-                    '</bottom>' +
-                '</content>';
-                return contentXml;
-        	}
-        
-        
-            function initTabbarAndContents(json) {
-                var obj = JSON.parse(json);
-                for (var i = 0; i < obj.data.length; i++) {
-                    var channel = obj.data[i];
-                    if (channel.default_add == 1 && channel.auto_add == 0) {
-                        var item = $C('<tabbar-item><item onclick="loadNewsList(\'' + channel.category + '\');currCategory=\'' + channel.category + '\';"><label style="color:#666666">' + channel.name + '</label></item></tabbar-item>');
-                        $('channel_tabbar').add(item);
-						$('contents').add($C(getContentXml(channel.category)));
-                    }
+            function remember_psw(){
+                if(remember == 0){
+                    $('check').src = 'checked.png';
+                    remember = 1;
+                }else {
+                    $('check').src = 'check.png';
+                    remember = 0;
                 }
             }
-            
-            function loadChannelTabbar() {
-                var storage = $phone.localStorage();
-                var channel_tabbar_json = storage.getItem('channel_tabbar_json');
-                if (channel_tabbar_json != null) {
-                	initTabbarAndContents(channel_tabbar_json);
-                } else {
-                    $http.get('http://www.imagapp.com/project/imag/imag-happyandsad/data/channel_tabbar.json', function(json) {
-                    	initTabbarAndContents(json);
-                    	storage.setItem('channel_tabbar_json', json);
-                    });
-                }
-            }
-           
-           	function loadNewsList(category, top) {
-                if (!top) {
-                    $(category + '_progress').css('display', '');
-                    $(category + '_more_label').text = '正在推荐..';
-                    $(category + '_content').showBottom();
-                }
-                $('contents').showContent(category + '_content');   
-           		$http.get('http://www.imagapp.com/project/imag/imag-happyandsad/data/' + category + '_articles.json', function(json) {
-                    var obj = JSON.parse(json);
-                    var listjson = {items:[]};
-                    obj.data.sort(function() {
-                    	return Math.random() - 0.5;    
-                    });
-                    var info = $phone.info();
-            		for (var i = 0; i < obj.data.length; i++) {
-            			var article = obj.data[i];
-                        var itemjson; 
-                        if (!article.title) {
-                            continue;
-                        }                    
-
-                        if (!article.image_list || article.image_list.length == 0) {
-                            if (article.has_image == false) {
-                                itemjson = {
-                                    template: 0,
-                                    onclick: '$page.open("article.xml?display_url=' + encodeURIComponent(article.display_url) + '")',
-                                    widgets: {
-                                        title: {text: article.title},
-                                        source: {text: article.source},
-                                        comment_count: {text: '评论' + article.comment_count},
-                                        publish_time: {text: dateTotime(article.publish_time)}
-                                    }
-                                };
-                        		if (info['platform'] == 'ios') {
-                                	itemjson.widgets.title['style'] = 'font-size:16;font-weight:bold';
-                             	}
-                            } else {
-                                itemjson = {
-                                    template: 1,
-                                    onclick: '$page.open("article.xml?display_url=' + encodeURIComponent(article.display_url) + '")',
-                                    widgets: {
-                                        title: {text: article.title},
-                                        source: {text: article.source},
-                                        comment_count: {text: '评论' + article.comment_count},
-                                        publish_time: {text: dateTotime(article.publish_time)},
-                                        middle_image: {src:article.middle_image.url}
-                                    }
-                                };
-                				if (info['platform'] == 'ios') {
-                                    itemjson.widgets.title['style'] = 'font-size:16;font-weight:bold;width:180';
-                                    itemjson.widgets.middle_image['style'] = 'width:90;height:60;margin-right:10';
-                             	}
-                            }
-                        } else {
-                            itemjson = {
-                          		template: 2,
-                                onclick: '$page.open("article.xml?display_url=' + encodeURIComponent(article.display_url) + '")',
-                          		widgets: {
-                          			title: {text: article.title},
-                          			source: {text: article.source},
-                          			comment_count: {text: '评论' + article.comment_count},
-                          			publish_time: {text: dateTotime(article.publish_time)},
-                    				image1: {src:article.image_list[0].url},
-                    				image2: {src:article.image_list[1].url},
-                    				image3: {src:article.image_list[2].url}
-                				}
-       	 					};
-        
-        					if (info['platform'] == 'ios') {
-                                itemjson.widgets.title['style'] = 'font-size:16;font-weight:bold';
-                                itemjson.widgets.image1['style'] = 'width:90;height:60';
-                                itemjson.widgets.image2['style'] = 'width:90;height:60';
-                                itemjson.widgets.image3['style'] = 'width:90;height:60';
-                            }
-                        }
-						listjson.items.push(itemjson);
-            		}
-                    if (top) {
-            			$(category + '_list').addTopMore(listjson);
-                    } else {
-            			$(category + '_list').addMore(listjson);
-                        $(category + '_progress').css('display', 'none');
-                    	$(category + '_more_label').text = '更多推荐..';
-                    }
-                	$('titlebar_refresh').css('display', '');
-                	$('titlebar_progress').css('display', 'none');
-        			$(category + '_content').hideTop();
-        			$(category + '_content').showBottom();
-            	}, function(error) {
-                    $('titlebar_refresh').css('display', '');
-                	$('titlebar_progress').css('display', 'none');
-        			$(category + '_content').hideTop();
-        			$(category + '_content').hideBottom();
-                    hint('网络错误');
-                })
-           	}
-            
-           	$page.onload = function() {
-                $('contents').add($C(getContentXml('news_default')));
-                loadChannelTabbar();
-                loadNewsList('news_default');
-           	}
         ]]>
     </script>
-    <page type="home" style="background:#363636">
-        <slidingmenu id="slidingmenu">
-            <item>
-                <content style="background:#363636">
-                    <list type="transparent" style="divider-border:1 #222422;">
-                        <item style="background:#363636,#363636;divider-border:1 #222422;">
-                            <row style="padding:0 30;margin-top:20">
-                                <icon src="ic_drawer_tencent.png" style="align:left;width:50;height:50" onclick="qqLogin()"/>
-                                <icon src="ic_drawer_weibo.png" style="align:center;width:50;height:50" onclick="sinaLogin()"/>
-                                <icon src="ic_drawer_qzone.png" style="align:right;width:50;height:50" onclick="qqLogin()"/>
-                            </row>
-                            <row style="padding:10 10;">
-                                <label style="color:#B4B2B4;font-size:12;align:center">登录后将推荐给您更多感兴趣的文章</label>
-                            </row>
-                        </item>
-                    </list>
-                    <list type="transparent" style="divider-border:1 #222422;">
-                        <item style="background:#363636,#272627;divider-border:1 #222422;" onclick="toSearch();">
-                            <row style="padding-left:30;">
-                                <icon src="ic_drawer_search_normal.png" style="width:35;height:35"/>
-                                <label style="color:#D2D1D2;margin-left:10;font-size:16">搜索</label>
-                            </row>
-                        </item>
-                        <item style="background:#363636,#272627;divider-border:1 #222422" onclick="toFavorite();">
-                            <row style="padding-left:30;">
-                                <icon src="ic_drawer_favorite_normal.png" style="width:35;height:35"/>
-                                <label style="color:#D2D1D2;margin-left:10;font-size:16">收藏</label>
-                            </row>
-                        </item>
-                        <item style="background:#363636,#272627;divider-border:1 #222422" onclick="toMessage();">
-                            <row style="padding-left:30;">
-                                <icon src="ic_drawer_message_normal.png" style="width:38;height:38"/>
-                                <label style="color:#D2D1D2;margin-left:10;font-size:16">通知</label>
-                            </row>
-                        </item>
-                        <item style="background:#363636,#272627;divider-border:1 #222422" onclick="toOffline();">
-                            <row style="padding-left:30;">
-                                <icon src="ic_drawer_offline_normal.png" style="width:38;height:38"/>
-                                <label style="color:#D2D1D2;margin-left:10;font-size:16">离线</label>
-                            </row>
-                        </item>
-                        <item style="background:#363636,#272627;divider-border:1 #222422" onclick="toActivity();">
-                            <row style="padding-left:30;">
-                                <icon src="left_drawer_activity.png" style="width:38;height:38"/>
-                                <label style="color:#D2D1D2;margin-left:10;font-size:16">活动</label>
-                            </row>
-                        </item>
-                        <item style="background:#363636,#272627;divider-border:1 #222422" onclick="toSetting();">
-                            <row style="padding-left:30;">
-                                <icon src="ic_drawer_setting_normal.png" style="width:38;height:38"/>
-                                <label style="color:#D2D1D2;margin-left:10;font-size:16">设置</label>
-                            </row>
-                        </item>
-                        <item style="background:#363636,#272627;divider-border:1 #222422" onclick="toFeedback();">
-                            <row style="padding-left:30;">
-                                <icon src="ic_drawer_feedback_normal.png" style="width:38;height:38"/>
-                                <label style="color:#D2D1D2;margin-left:10;font-size:16">反馈</label>
-                            </row>
-                        </item>
-                    </list>
-                </content>
-            </item>
-            <item>
-                <title style="background:#CB2D2E">
-                    <left>
-                        <button style="background:default_round_head.png;width:30;height:30;margin-left:5" onclick="$('slidingmenu').open()"/>
-                    </left>
-                    <center>
-                        <icon src="title.png"/>
-                        <button id="titlebar_refresh" style="background:refreshicon_titlebar.png" onclick="titlebarRefresh();"/><progress id="titlebar_progress" style="display:none"/>
-                    </center>
-                </title>
-                <header style="background:#F3F3F3">
-                    <tabbar id="channel_tabbar" shownum="5" style="background:#F3F3F3" selectimage="tabbar_select_image.png">
-                        <item onclick="$('contents').showContent(0)"><label style="color:#666666">推荐</label></item>
-                    </tabbar>
-                    <row style="background:#DDDDDD;height:1"></row>
-                </header>
-                <contents id="contents">
-                </contents>
-            </item>
-        </slidingmenu>
+    <page screen="full" style="background:index.jpg">
+        <content>
+        </content>
+		<footer>
+            <list type="transparent">
+                <item style="padding:0"><col>
+                    <row><label style="font-style:italic;font-size:35;color:white;align:center">Queue</label></row>
+                    <row style="background:white;height:4;width:50;align:center;margin-top:10"></row>
+                    </col></item>
+                <item style="padding:0;margin:84 40 0;"><col>
+                    <row><input type="text" id="username" placeholder="Username" style="color:#707070;height:48;background:white"/></row>
+                    <row style="background:#eff0f0;height:1"></row>
+                    <row><input type="password" id="password" placeholder="Password" style="color:#707070;height:48;background:white"/></row>
+                    </col></item>
+                <item style="border:1 white;margin:18 40 0;padding:0" onclick="login()">
+                    <col><row style="height:42"><label style="align:center;font-size:17;color:white;">Sign In</label></row></col>
+                </item>
+                <item style="padding:0;margin:22 40 46">
+                    <row>
+                        <icon id="check" src="check.png" onclick="remember_psw()"/>
+                        <label style="font-size:14;color:#ffffff;margin-left:10" onclick="remember_psw()">Remember password</label>
+                        <label style="font-size:14;color:#ffffff;align:right;text-decoration:underline">register→</label>
+                    </row>
+                </item>
+            </list>
+		</footer>
     </page>
 </imag>
