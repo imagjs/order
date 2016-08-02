@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<imag>
+    <script>
+        <![CDATA[
+        $page.onload = function(){
+            $http.get("http://www.imagapp.com/project/imag/imag-mh0504/data/mine.json",function(data){
+                var data = JSON.parse(data).data;
+                var info = data.info;
+                $('order').text = info.order;
+                $('points').text = info.points;
+                $('collection').text = info.collection;
+                $('coupom').text = info.coupom;
+            	var listJson = {items:[]};
+                //当前订单
+                var present = data.present;
+               	var item0Json = {
+                   	template:0,
+                   	widgets:{
+                        present_icon:{src:present.icon},
+                        present_name:{text:present.name},
+                        present_number:{text:present.number+'人'},
+                        present_park:{text:present.park},
+                        present_time:{text:present.time},
+                        present_smoke:{text:present.smoke}
+                   	}
+               	}
+                listJson.items.push(item0Json);
+                //过往订单
+                var past = data.past;
+                for(i = 0;i<past.length;i++){
+                    if(past[i].remark!=""&&past[i].remark!=null){
+						var item1Json = {
+							template:1,
+							widgets:{
+								past_icon:{src:past[i].icon},
+								past_name:{text:past[i].name},
+								past_number:{text:past[i].number+'人'},
+								past_park:{text:past[i].park},
+								past_time:{text:past[i].time}
+							}
+						}
+						listJson.items.push(item1Json);
+                        var item2Json = {
+                            template:2,
+                            widgets:{
+                                past_remark:{text:past[i].remark}
+                            }
+                        }
+                    	listJson.items.push(item2Json);
+                    }else{
+						var item3Json = {
+							template:3,
+							widgets:{
+								past_icon:{src:past[i].icon},
+								past_name:{text:past[i].name},
+								past_number:{text:past[i].number+'人'},
+								past_park:{text:past[i].park},
+								past_time:{text:past[i].time}
+							}
+						}
+						listJson.items.push(item3Json);
+					}
+                }
+                $('list').update(listJson);
+            })
+        }
+        ]]>
+    </script>
+    <page screen="full" style="background:background.jpg">
+        <content dragable="false">
+            <list type="transparent">
+                <item style="padding:0"><col><row>
+                	<button style="margin:20 10;align:left;background:title_back.png" onclick="$page.close(0)"></button>
+                </row></col></item>
+                <item style="margin:0 30;padding:0">
+                    <col>
+                        <row><label style="color:#ffffff;font-size:21">Queue</label></row>
+                        <row><label style="color:#ffffff;font-size:16;margin-top:25">我不是在吃，就是在去吃的路上。</label></row>
+                    </col>
+                </item>
+                <item style="padding:0;margin:64 7 0">
+                    <col>
+                        <row><label style="align:center;color:#ffffff;font-size:11">订单</label></row>
+                        <row><label id="order" style="align:center;color:#ffffff;font-size:10;margin-top:2"/></row>
+                    </col>
+                    <col>
+                        <row><label style="align:center;color:#ffffff;font-size:11">积分</label></row>
+                        <row><label id="points" style="align:center;color:#ffffff;font-size:10;margin-top:2"/></row>
+                    </col>
+                    <col>
+                        <row><label style="align:center;color:#ffffff;font-size:11">收藏</label></row>
+                        <row><label id="collection" style="align:center;color:#ffffff;font-size:10;margin-top:2"/></row>
+                    </col>
+                    <col>
+                        <row><label style="align:center;color:#ffffff;font-size:11">优惠</label></row>
+                        <row><label id="coupom" style="align:center;color:#ffffff;font-size:10;margin-top:2"/></row>
+                    </col>
+                </item>
+            </list>
+            <list type="transparent" reuse="true" id="list" style="margin:0 11 21">
+                <item style="padding:0 21 21;margin:20 0 0;background:#ee791b;col-width:71,*;corner-radius:4">
+                    <col><row><icon reusekey="present_icon" style="height:61;width:61;align:left"/></row></col>
+                    <col>
+                        <row><label reusekey="present_name" style="color:#ffffff;font-size:14;font-weight:bold"/></row>
+                        <row style="margin:5 0">
+                            <label style="color:#ffffff;font-size:10">预约人数：</label>
+                            <label reusekey="present_number" style="color:#ffffff;font-size:10"/>
+                            <label reusekey="present_park" style="color:#ffffff;font-size:10"/>
+                            <label style="color:#ffffff;font-size:10;align:right" onclick="$page.open('carte.xml')">在线点餐</label>
+                        </row>
+                        <row>
+                            <label style="color:#ffffff;font-size:10">预约时间：</label>
+                            <label reusekey="present_time" style="color:#ffffff;font-size:10"/>
+                            <label reusekey="present_smoke" style="color:#ffffff;font-size:10;align:right"/>
+                        </row>
+                    </col>
+                </item>
+                <item style="padding:0 21 11;margin:21 0 0;background:#ffffff;col-width:71,*;corner-radius:4 0">
+                    <col><row><icon reusekey="past_icon" style="height:61;width:61;align:left"/></row></col>
+                    <col>
+                        <row><label reusekey="past_name" style="color:#707070;font-size:14;font-weight:bold"/></row>
+                        <row style="margin:5 0">
+                            <label style="color:#707070;font-size:10">预约人数：</label>
+                            <label reusekey="past_number" style="color:#707070;font-size:10"/>
+                            <label reusekey="past_park" style="color:#707070;font-size:10"/>
+                        </row>
+                        <row>
+                            <label style="color:#707070;font-size:10">预约时间：</label>
+                            <label reusekey="past_time" style="color:#707070;font-size:10"/>
+                            <label style="color:#707070;font-size:10;align:right">评价</label>
+                        </row>
+                    </col>
+                </item>
+                <item style="padding:0 21;background:#ffffff;corner-radius:0 4">
+                    <row style="background:#eeeeed;height:1"></row>
+                    <row><label reusekey="past_remark" style="color:#707070;font-size:10;align:center;margin:10 0"/></row>
+                </item>
+                <item style="padding:0 21 11;margin:21 0 0;background:#ffffff;col-width:71,*;corner-radius:4">
+                    <col><row><icon reusekey="past_icon" style="height:61;width:61;align:left"/></row></col>
+                    <col>
+                        <row><label reusekey="past_name" style="color:#707070;font-size:14;font-weight:bold"/></row>
+                        <row style="margin:5 0">
+                            <label style="color:#707070;font-size:10">预约人数：</label>
+                            <label reusekey="past_number" style="color:#707070;font-size:10"/>
+                            <label reusekey="past_park" style="color:#707070;font-size:10"/>
+                        </row>
+                        <row>
+                            <label style="color:#707070;font-size:10">预约时间：</label>
+                            <label reusekey="past_time" style="color:#707070;font-size:10"/>
+                            <label style="color:#707070;font-size:10;align:right">评价</label>
+                        </row>
+                    </col>
+                </item>
+            </list>
+        </content>
+    </page>
+</imag>
