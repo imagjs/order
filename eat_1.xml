@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<imag>
+    <page screen="full" style="background:#ffffff">
+        <content>
+            <button style="margin:20 10;color:#FFFFFF;background:title_back.png" position="topleft" relative="icon" onclick="$page.close(0)"></button>
+            <list id="icon" type="transparent">
+                <item style="padding:0"><col>
+                    <icon src="eat_1.jpg" style="width:100%"/>
+                </col></item>
+            </list>
+            <list type="transparent" style="margin-top:31">
+                <item style="padding:0"><col>
+                    <row><label style="font-size:19;color:#343434;align:center;font-weight:bold">面条劲道 味道地道</label></row>
+                    <row><label style="font-size:15;color:#343434;align:center;font-style:italic;margin:14 0 10">2016.4.12</label></row>
+                    <row style="background:#0caadc;width:80;height:2;align:center"></row>
+                    </col></item>
+                <item style="padding:40"><col><row>
+                    <label style="color#878787;font-size:16">小面是作为南方人的重庆市民唯一普遍接受的面食。重庆人对重庆小面的热爱不亚于火锅，亲密度更是有过之而无不及。重庆人喜爱小面与其说上瘾，不如说是一种依赖。每天清早起来，街边的面摊格外红火，尽管一些堂子装修的不太好，甚至就是路边摊。但是，美女们在这个时候也从不顾及自己的淑女形象，吃着那是个香哦；还有西装革履的绅士，放下公文包，呼-呼-呼，三下五除二的就把一碗小面吃尽。面摊前，有白领，有棒棒力夫，有小学生，形形色色，不论身世，不论地位，各色人等为的就是一碗重庆小面。外出回家的重庆人，如果不能先吃顿火锅，但一定要先“下”碗小面解馋。</label>
+                    </row></col></item>
+            </list>
+        </content>
+        <footer>
+            <list><item style="margin:30 39;background:#00a9de" onclick="$page.open('order.xml')"><col><row>
+                <label style="font-size:16;color:#ffffff;align:center">预约</label>
+                </row></col></item></list>
+        </footer>
+    </page>
+</imag>
