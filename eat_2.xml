@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<imag>
+    <page screen="full" style="background:#ffffff">
+        <content>
+            <button style="margin:20 10;color:#FFFFFF;background:title_back.png" position="topleft" relative="icon" onclick="$page.close(0)"></button>
+            <list id="icon" type="transparent">
+                <item style="padding:0"><col>
+                    <icon src="eat_2.jpg" style="width:100%"/>
+                </col></item>
+            </list>
+            <list type="transparent" style="margin-top:31">
+                <item style="padding:0"><col>
+                    <row><label style="font-size:19;color:#343434;align:center;font-weight:bold">鑫海汇海鲜自助</label></row>
+                    <row><label style="font-size:15;color:#343434;align:center;font-style:italic;margin:14 0 10">2016.4.12</label></row>
+                    <row style="background:#0caadc;width:80;height:2;align:center"></row>
+                    </col></item>
+                <item style="padding:40"><col><row>
+                    <label style="color#878787;font-size:16">仅售79元！价值98元的晩市自助。周六周日全天通用,位于人民广场繁华商圈雅居乐国际广场4楼，交通便捷，环境幽雅，各类精选美食，只有你想不到，没有你吃不到，唤醒你的味蕾。</label>
+                    </row></col></item>
+            </list>
+        </content>
+        <footer>
+            <list><item style="margin:30 39;background:#00a9de" onclick="$page.open('order.xml')"><col><row>
+                <label style="font-size:16;color:#ffffff;align:center">预约</label>
+                </row></col></item></list>
+        </footer>
+    </page>
+</imag>
